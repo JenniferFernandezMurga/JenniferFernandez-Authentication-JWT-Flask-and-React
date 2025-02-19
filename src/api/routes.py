@@ -23,30 +23,3 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-
-# Create a route to authenticate your users and return JWTs. The
-# create_access_token() function is used to actually generate the JWT.
-@api.route("/login", methods=["POST"])
-def login():
-    try:
-        email = request.json.get("email", None)
-        password = request.json.get("password", None)
-        user = db.session.execute(db.select(User).filter_by(email=email)).scalar_one()
-
-        if email == user.email or password == user.password:
-            access_token = create_access_token(identity=email)
-            return jsonify(access_token=access_token), 200
-            
-    except:
-         return jsonify({"msg": "Bad email or password"}), 401
-
-
-# Protect a route with jwt_required, which will kick out requests
-# without a valid JWT present.
-@api.route("/profile", methods=["GET"])
-@jwt_required()
-def get_profile():
-    # Access the identity of the current user with get_jwt_identity
-    current_user = get_jwt_identity()
-    print(current_user)
-    return jsonify(logged_in_as=current_user), 200
