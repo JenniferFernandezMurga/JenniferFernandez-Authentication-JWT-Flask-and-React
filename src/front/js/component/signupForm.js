@@ -8,13 +8,24 @@ export const SignupForm = () => {
     const {store,actions} = useContext(Context)
     let navigate = useNavigate();
 
-    async function handleSubmit(e) {
-        e.preventDefault()
-       let signup =  actions.signup(email,password);
-       if (signup) {
-            navigate("/login")
-       }
+    // async function handleSubmit(e) {
+    //     e.preventDefault()
+    //    let signup =  actions.signup(email,password);
+       
+    //    if (signup) {
         
+    //         navigate("/login")
+    //    }
+        
+    // }
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const { success, exists, error } = await actions.signup(email, password, navigate);
+        
+        if (!success) {
+            alert(exists ? "Usuario existente - Redirigiendo a login" : `Error: ${error}`);
+        }
     }
 
     return (
