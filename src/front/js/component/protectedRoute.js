@@ -1,15 +1,34 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
+// export const ProtectedRoute = ({ children }) => {
+//   const { store } = useContext(Context);
+//   const token = localStorage.getItem('token');
+
+//   if (!token || !store.isAuthenticated) {
+//     return <Navigate to="/" replace />;
+//   }
+
+//   return children;
+// };
 export const ProtectedRoute = ({ children }) => {
-  const { store } = useContext(Context);
-  const token = localStorage.getItem('token');
+  const [isLoading, setIsLoading] = useState(true);
+  const { store, actions } = useContext(Context);
 
-  if (!token || !store.isAuthenticated) {
-    return <Navigate to="/login" replace />;
+  useEffect(() => {
+    const verifyAuth = async () => {
+      await actions.verifyToken();
+      setIsLoading(false);
+    };
+
+    verifyAuth();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
-
-  return children;
+  
+  return store.logged ? children : <Navigate to="/login" replace />;
 };

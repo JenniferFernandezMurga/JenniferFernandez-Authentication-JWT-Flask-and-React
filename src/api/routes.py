@@ -169,31 +169,31 @@ def login():
 
 #verificación token
 
-@api.route('/verify-token', methods=['POST'])
-@jwt_required()
-def validate_token():
-    current_user_email = get_jwt_identity()
-    user = User.query.filter_by(email=current_user_email).first()
+# @api.route('/verify-token', methods=['POST'])
+# @jwt_required()
+# def validate_token():
+#     current_user_email = get_jwt_identity()
+#     user = User.query.filter_by(email=current_user_email).first()
     
-    if not user:
-        return jsonify({"valid": False}), 401
+#     if not user:
+#         return jsonify({"valid": False}), 401
     
-    return jsonify({
-        "valid": True,
-        "user": {
-            "id": user.id,
-            "email": user.email
-        }
-    }), 200
+#     return jsonify({
+#         "valid": True,
+#         "user": {
+#             "id": user.id,
+#             "email": user.email
+#         }
+#     }), 200
 
-# @api.route("/verify-token", methods=["GET"])
-# def verify_token():
-#     try:
-#         verify_jwt_in_request()  
-#         identity = get_jwt_identity()
-#         return jsonify({"valid": True, "user": identity}), 200
-#     except NoAuthorizationError:
-#         return jsonify({"valid": False, "message": "Token inválido o no proporcionado"}), 401
+@api.route("/verify-token", methods=["GET"])
+def verify_token():
+    try:
+        verify_jwt_in_request()  
+        identity = get_jwt_identity()
+        return jsonify({"valid": True, "user": identity}), 200
+    except NoAuthorizationError:
+        return jsonify({"valid": False, "message": "Token inválido o no proporcionado"}), 401
 
 
 

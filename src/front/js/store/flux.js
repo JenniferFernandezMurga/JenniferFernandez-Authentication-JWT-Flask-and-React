@@ -6,6 +6,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			logged:null,
 			message: null,
 			auth: false,
+			isAuthenticated:null,
 			demo: [
 				{
 					title: "FIRST",
@@ -232,6 +233,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 					if (data.user_exists) {
 						// Usuario existe -> redirigir a login con email
+						alert("El usuario ya existe")
 						navigate("/login");
 						return { success: true, exists: true };
 					}
