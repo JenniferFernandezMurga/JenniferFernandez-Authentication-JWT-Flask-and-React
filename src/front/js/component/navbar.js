@@ -13,14 +13,14 @@ export const Navbar = () => {
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+					<span className="navbar-brand mb-0 h1">Home</span>
 				</Link>
 				<div className="ml-auto">
 					{/* {store.auth ? <Link to="/">
 						<button className="btn btn-primary">Logout</button>
 					</Link>:null} */}
 					<Link to="/">
-					<button className="btn btn-primary" onClick={handleLogout}>Logout</button>
+					<button className="btn btn-primary" onClick={handleLogout}>Cerrar sesión</button>
 					</Link>
 				</div>
 			</div>

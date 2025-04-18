@@ -33,10 +33,10 @@ const Layout = () => {
                         <Route element={<Home />} path="/" />
                         <Route element={<Login />} path="/login" />
                         {/* Proteccion de rutas */}
-                        {/* <Route path="/private" element={<ProtectedRoute>
-                        <Private /> </ProtectedRoute> } /> */}
-                        <Route element={<ProtectedRoute><Private></Private></ProtectedRoute>} path="/private" />
-                        {/* <Route element={<Private />} path="/private" /> */}
+                        {/* <Route element={<ProtectedRoute><Private></Private></ProtectedRoute>} path="/private" /> */}
+                        <Route path="/private" element={<ProtectedRoute/>} > 
+                        <Route element={<Private />} index/>
+                        </Route>
                         <Route element={<Signup />} path="/signup" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

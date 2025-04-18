@@ -2,14 +2,12 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.min.css";
+
 
 export const Private = () => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-
-  //  VOY POR AQUI, PENDIENTE BUSCAR LA FORMA DE QUE NADIE PUEDA ACCEDER A PIVATE DESDE URL Y QUE SI NO HAY TOKEN SALGA
   useEffect(() => {
 
     actions.getUser()
@@ -28,101 +26,106 @@ export const Private = () => {
   }, [actions]); 
 console.log(store.data);
 
-// useEffect(() => {
-//   // Verificación al cargar el componente
-//   const token = localStorage.getItem("token"); // o sessionStorage
-  
-//   if (!token) {
-//     navigate("/login"); // Redirige si no hay token
-//     return;
-//   }
-
-//   // Verificación adicional con el backend
-//   actions.validateToken(token)
-//     .catch(() => {
-//       localStorage.removeItem("token");
-//       navigate("/login");
-//     });
-// }, [navigate, actions]);
-
-// useEffect(() => {
-//     const loadUserData = async () => {
-//       try {
-//         // 1. Verificar token primero
-//         const token = sessionStorage.getItem("token");
-//         if (!token) {
-//           navigate("/login");
-//           // alert("Sesión cancelada")
-//           return;
-//         }
-  
-//         // 2. Obtener usuario
-//         await actions.getUser();
-        
-//         // 3. Verificar que el usuario se cargó
-//         if (!store.user) {
-//           throw new Error("No se pudo cargar la información del usuario");
-//         }
-  
-//         // 4. Obtener datos privados si es necesario
-//         if (actions.getPrivate) {
-//           const privateData = await actions.getPrivate();
-//           console.log("Datos privados:", privateData);
-//         }
-  
-//       } catch (error) {
-//         console.error("Error en Private:", error);
-//         sessionStorage.removeItem("token");
-//         navigate("/");
-//       }
-//     };
-  
-//     loadUserData();
-//   }, [actions, navigate]);
-
-
-// useEffect(() => {
-//   const verifyAndLoad = async () => {
-//     const token = sessionStorage.getItem("token");
-    
-//     // 1. Redirigir si no hay token
-//     if (!token) {
-//       navigate("/login");
-//       alert("Sesión cancelada, vuelva a intentarlo")
-//       return;
-//     }
-
-//     try {
-//       // 2. Verificar token y cargar datos
-//       await actions.getUser(); // Esta acción debería validar el token con el backend
-      
-//       // 3. Redirigir si el usuario no se cargó (token inválido)
-//       if (!store.user) {
-//         throw new Error("Token inválido o expirado");
-//       }
-
-//       // 4. Cargar datos adicionales (opcional)
-//       await actions.getPrivate(); // Uso de ?. por si no existe
-
-//     } catch (error) {
-//       console.error("Error de autenticación:", error);
-//       sessionStorage.removeItem("token");
-//       navigate("/login");
-//     }
-//   };
-
-//   verifyAndLoad();
-// }, [actions, navigate, store.user]); // Dependencias clave
-// console.log(store.user);
-
   return (
     <div className="container py-5">
 
-     {/* Perfil usuario */}
      <div className="card p-4 mb-5" >
-        <h2 className="text-dark mb-3">Hello, <span className="fw-bold">{store.result}</span> 👋</h2>
-        <h4>Welcome to your private view.</h4>
-      </div>
+        <h2 className="text-dark mb-3">Hola, <span className="fw-bold">{store.result}</span> 👋</h2>
+        <h4>Bienvenido a tu vista privada</h4>
+  
+        <div className="container py-5">
+    <h2 className="text-center mb-5">📌 Mis Posts Favoritos</h2>
+    
+    <div className="row g-4">
+    
+        <div className="col-lg-4 col-md-6">
+            <div className="card h-100 border-0 shadow-sm hover-effect">
+                <div className="position-relative">
+                    <img 
+                        src="https://www.xtrafondos.com/wallpapers/montanas-en-el-bosque-sneffels-3900.jpg" 
+                        className="card-img-top object-fit-cover" 
+                        alt="Post 1" 
+                        style={{height:"200px"}}
+                    />
+                    <span className="badge bg-danger position-absolute top-0 end-0 m-2">
+                        <i className="fas fa-heart"></i> 245
+                    </span>
+                </div>
+                <div className="card-body">
+                    <h5 className="card-title">Aventura en las Montañas</h5>
+                    <p className="card-text text-muted">Un viaje increíble por los Alpes suizos con vistas espectaculares.</p>
+                </div>
+                <div className="card-footer bg-transparent border-0 d-flex justify-content-between">
+                    <button className="btn btn-sm btn-outline-primary">
+                        <i className="fas fa-bookmark"></i> Guardar
+                    </button>
+                    <button className="btn btn-sm btn-outline-success">
+                        <i className="fas fa-share-alt"></i> Compartir
+                    </button>
+                </div>
+            </div>
+        </div>
+
+      
+        <div className="col-lg-4 col-md-6">
+            <div className="card h-100 border-0 shadow-sm hover-effect">
+                <div className="position-relative">
+                    <img 
+                        src="https://tse3.mm.bing.net/th?id=OIP.FL6r-StiKPIoGxDaylYHMwHaEb&pid=Api&P=0&h=180" 
+                        className="card-img-top object-fit-cover" 
+                        alt="Post 2" 
+                         style={{height:"200px"}}
+                    />
+                    <span className="badge bg-danger position-absolute top-0 end-0 m-2">
+                        <i className="fas fa-heart"></i> 189
+                    </span>
+                </div>
+                <div className="card-body">
+                    <h5 className="card-title">Atardecer en la Playa</h5>
+                    <p className="card-text text-muted">Relajante tarde en las playas de Bali, Indonesia.</p>
+                </div>
+                <div className="card-footer bg-transparent border-0 d-flex justify-content-between">
+                    <button className="btn btn-sm btn-outline-primary">
+                        <i className="fas fa-bookmark"></i> Guardar
+                    </button>
+                    <button className="btn btn-sm btn-outline-success">
+                        <i className="fas fa-share-alt"></i> Compartir
+                    </button>
+                </div>
+            </div>
+        </div>
+
+       
+        <div className="col-lg-4 col-md-6">
+            <div className="card h-100 border-0 shadow-sm hover-effect">
+                <div className="position-relative">
+                    <img 
+                        src="https://s1.1zoom.me/b5050/538/Japan_Tokyo_Temples_Flowering_trees_Asakusa_Kannon_549958_3840x2400.jpg" 
+                        className="card-img-top object-fit-cover" 
+                        alt="Post 3" 
+                         style={{height:"200px"}}
+                    />
+                    <span className="badge bg-danger position-absolute top-0 end-0 m-2">
+                        <i className="fas fa-heart"></i> 312
+                    </span>
+                </div>
+                <div className="card-body">
+                    <h5 className="card-title">Vida Urbana en Tokio</h5>
+                    <p className="card-text text-muted">Explorando la vibrante ciudad de Tokio de noche.</p>
+                </div>
+                <div className="card-footer bg-transparent border-0 d-flex justify-content-between">
+                    <button className="btn btn-sm btn-outline-primary">
+                        <i className="fas fa-bookmark"></i> Guardar
+                    </button>
+                    <button className="btn btn-sm btn-outline-success">
+                        <i className="fas fa-share-alt"></i> Compartir
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
     </div>
   );
 };

@@ -22,29 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 
-			// getUser: async () => {
-            //     try {
-            //         const token = sessionStorage.getItem("token");
-            //         if (!token) throw new Error("No token found");
-
-            //         const response = await fetch(`${process.env.BACKEND_URL}/api/user`, {
-            //             headers: {
-            //                 "Authorization": `Bearer ${token}`
-            //             }
-            //         });
-
-            //         if (!response.ok) throw new Error("Error al obtener el usuario");
-
-            //         const data = await response.json();
-            //         setStore({ user: data });
-
-            //         // Una vez que tenemos el usuario, obtenemos sus mascotas
-            //         // getActions().getPets(data.id);
-
-            //     } catch (error) {
-            //         console.log("Error al obtener usuario", error);
-            //     }
-            // },
+		
 			getUser: async () => {
 				const token = sessionStorage.getItem("token");
 				if (!token) throw new Error("No token");
@@ -70,7 +48,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Use getActions to call a function within a fuction
 			
 
-			login: async (email, password) => {
+			login: async (email, password,navigate) => {
 				// Validación básica
 				if (!email || !password) {
 					console.error("Email y password son requeridos");
@@ -82,16 +60,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
-							// Añade esto si tienes problemas de CORS
 							"Origin": window.location.origin
 						},
 						body: JSON.stringify({ email, password })
 					});
 			
-					// Manejo de errores HTTP
+					
 					if (!response.ok) {
 						const errorData = await response.json().catch(() => ({}));
-						console.error("Error en login:", errorData.message || "Credenciales inválidas");
+						console.error("Error en login:", errorData.message || "Credenciales inválidas")
+						navigate ("/signup");
+					
 						return { 
 							success: false, 
 							message: errorData.message || "Error en la autenticación" 
@@ -143,81 +122,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					};
 				}
 			},
-			// login: async (email, password) => {
-			// 	if (!email || !password) {
-			// 		console.error("Email y password son requeridos");
-			// 		return { success: false, message: "Email y password son requeridos" };
-			// 	}
-			
-			// 	try {
-			// 		const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
-			// 			method: "POST",
-			// 			headers: {
-			// 				"Content-Type": "application/json"
-			// 			},
-			// 			body: JSON.stringify({ email, password })
-			// 		});
-			
-			// 		// Verifica si la respuesta no es exitosa
-			// 		if (!response.ok) {
-			// 			const errorData = await response.json();
-			// 			console.error("Error en login:", errorData.message || "Credenciales inválidas");
-			// 			return { 
-			// 				success: false, 
-			// 				message: errorData.message || "Credenciales inválidas" 
-			// 			};
-			// 		}
-			
-			// 		const data = await response.json();
-			// 		console.log("Respuesta del login:", data);
-			
-			// 		// Verifica que la respuesta tenga la estructura esperada
-			// 		if (!data.token) {
-			// 			console.error("No se recibió token en la respuesta");
-			// 			return { success: false, message: "Error en la respuesta del servidor" };
-			// 		}
-			
-			// 		// Guarda el token y el usuario
-			// 		localStorage.setItem("token", data.token);
-					
-			// 		// Asegúrate que data.user existe antes de guardarlo
-			// 		if (data.user) {
-			// 			localStorage.setItem("user", JSON.stringify(data.user));
-			// 		} else {
-			// 			console.warn("La respuesta no incluye datos de usuario");
-			// 		}
-			
-			// 		// Actualiza el store de una sola vez
-			// 		setStore({ 
-			// 			logged: true,
-			// 			token: data.token,
-			// 			user: data.user || null,  // Asegura que user sea null si no viene en la respuesta
-			// 			isAuthenticated: true
-			// 		});
-			
-			// 		return { 
-			// 			success: true, 
-			// 			message: "Login exitoso",
-			// 			user: data.user 
-			// 		};
-			
-			// 	} catch (error) {
-			// 		console.error("Error en login:", error);
-			// 		// Limpieza en caso de error
-			// 		localStorage.removeItem("token");
-			// 		localStorage.removeItem("user");
-			// 		setStore({ 
-			// 			logged: false,
-			// 			token: null,
-			// 			user: null,
-			// 			isAuthenticated: false
-			// 		});
-			// 		return { 
-			// 			success: false, 
-			// 			message: error.message || "Error en la conexión" 
-			// 		};
-			// 	}
-			// },
+		
+		
 			signup: async (email, password, navigate) => {
 				try {
 					const response = await fetch(`${process.env.BACKEND_URL}/api/signup`, {

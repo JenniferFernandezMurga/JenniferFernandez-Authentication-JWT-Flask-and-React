@@ -30,11 +30,11 @@ const injectContext = PassedComponent => {
 		// 	 **/
 		// 	state.actions.getMessage(); // <---- calling this function from the flux.js actions
 		// }, []);
-		useEffect(() => {
-			if (state && state.actions && state.actions.getMessage) {
-				state.actions.getMessage();
-			}
-		}, [state]); // Añade state como dependencia
+		// useEffect(() => {
+		// 	if (state && state.actions && state.actions.getMessage) {
+		// 		state.actions.getMessage();
+		// 	}
+		// }, [state]); // Añade state como dependencia
 
 		// The initial value for the context is not null anymore, but the current state of this component,
 		// the context will now have a getStore, getActions and setStore functions available, because they were declared

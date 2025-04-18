@@ -12,7 +12,7 @@ export const Signup = () => {
 
     return (
         <div className="text-center mt-5">
-            <h1>Signup</h1>
+            <h1>Registro de usuario</h1>
             <SignupForm/>
         </div>
     );
